@@ -19,5 +19,12 @@ public class MainMenu extends AppCompatActivity {
                 startActivity(new Intent(MainMenu.this,Settings.class));
             }
         });
+        Button histButt = (Button)findViewById(R.id.history_button);
+        histButt.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainMenu.this,Scan_History.class));
+            }
+        });
     }
 }
