@@ -23,11 +23,11 @@ public class SplashScreen extends Activity {
             public void run() {
                 try {
                     int elapsedTime = 0;
-                    while(active && (elapsedTime < splashTime)) {
+                    while (active && (elapsedTime < splashTime)) {
                         sleep(sleepTime);
-                        if(active) elapsedTime = elapsedTime + timeIncrement;
+                        if (active) elapsedTime = elapsedTime + timeIncrement;
                     }
-                } catch(InterruptedException e) {
+                } catch (InterruptedException e) {
                     // do nothing
                 } finally {
                     finish();
@@ -37,7 +37,6 @@ public class SplashScreen extends Activity {
         };
         splashThread.start();
     }
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
