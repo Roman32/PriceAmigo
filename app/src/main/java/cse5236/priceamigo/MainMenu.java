@@ -12,6 +12,13 @@ public class MainMenu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+        Button scanButt = (Button)findViewById(R.id.settings_button);
+        scanButt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         Button settButt = (Button)findViewById(R.id.settings_button);
         settButt.setOnClickListener(new View.OnClickListener() {
             @Override
