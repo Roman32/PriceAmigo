@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,60 +8,75 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="cse5236.priceamigo.MainMenu"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorPrimary"
+    android:weightSum="1">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Price Amigo"
-        android:id="@+id/textView"
-        android:layout_gravity="center_horizontal"
-        android:textColor="#1b7e0d"
-        android:textSize="40dp"
-        android:layout_marginTop="75dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
 
-    <Button
-        android:layout_width="122dp"
-        android:layout_height="wrap_content"
-        android:text="Scan"
-        android:id="@+id/scan_button"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.10"
-        android:layout_above="@+id/history_button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="50dp"
-        android:background="#216C2A"
-        android:textColor="#ffffff" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView2"
+        android:layout_weight="0.81">
 
-    <Button
-        android:layout_width="123dp"
-        android:layout_height="wrap_content"
-        android:text="History"
-        android:id="@+id/history_button"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.07"
-        android:layout_marginBottom="50dp"
-        android:layout_above="@+id/settings_button"
-        android:layout_alignLeft="@+id/settings_button"
-        android:layout_alignStart="@+id/settings_button"
-        android:background="#216C2A"
-        android:textColor="#ffffff" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <Button
-        android:layout_width="123dp"
-        android:layout_height="wrap_content"
-        android:text="Settings"
-        android:id="@+id/settings_button"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.06"
-        android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/scan_button"
-        android:layout_alignStart="@+id/scan_button"
-        android:layout_marginBottom="85dp"
-        android:background="#216C2A"
-        android:textColor="#ffffff" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="History"
+                android:id="@+id/history_button"
+                android:layout_centerVertical="true"
+                android:layout_alignRight="@+id/settings_button"
+                android:layout_alignEnd="@+id/settings_button"
+                android:layout_alignLeft="@+id/scan_button"
+                android:layout_alignStart="@+id/scan_button"
+                android:background="#216C2A"
+                android:textColor="#ffffff"
+                android:layout_marginTop="250dp"        />
 
-</RelativeLayout>
+            <Button
+                android:layout_width="123dp"
+                android:layout_height="wrap_content"
+                android:text="Settings"
+                android:id="@+id/settings_button"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0.06"
+                android:layout_alignParentTop="true"
+                android:layout_alignLeft="@+id/scan_button"
+                android:layout_alignStart="@+id/scan_button"
+                android:background="#216C2A"
+                android:textColor="#ffffff"
+                android:layout_marginTop="350dp" />
+
+            <Button
+                android:layout_width="122dp"
+                android:layout_height="wrap_content"
+                android:text="Scan"
+                android:layout_alignParentTop="true"
+                android:id="@+id/scan_button"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0.10"
+                android:layout_centerHorizontal="true"
+                android:background="#216C2A"
+                android:textColor="#ffffff"
+                android:layout_marginTop="150dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Price Amigo"
+                android:id="@+id/textView"
+                android:layout_gravity="center_horizontal"
+                android:textColor="#1b7e0d"
+                android:textSize="40dp"
+                android:layout_marginTop="63dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+    </ScrollView>
+
+</LinearLayout>
