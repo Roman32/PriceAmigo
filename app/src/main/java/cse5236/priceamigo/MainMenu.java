@@ -12,11 +12,11 @@ public class MainMenu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
-        Button scanButt = (Button)findViewById(R.id.settings_button);
+        Button scanButt = (Button)findViewById(R.id.scan_button);
         scanButt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(MainMenu.this, Scan.class));
             }
         });
         Button settButt = (Button)findViewById(R.id.settings_button);
