@@ -17,6 +17,7 @@ import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import org.w3c.dom.Text;
@@ -74,8 +75,8 @@ public class SearchResult extends Activity {
                     i.setData(Uri.parse(url));
                     startActivity(i);
                 }catch (NullPointerException e){
-                    e.printStackTrace();
-                }catch (ActivityNotFoundException e){
+                    Toast.makeText(SearchResult.this, "Turn on GPS",
+                            Toast.LENGTH_LONG).show();
                     e.printStackTrace();
                 }
             }
@@ -133,10 +134,9 @@ public class SearchResult extends Activity {
     private int calculateZoomLevel(int screenWidth, int r) {
         int d = 2*r;
         double equatorLength = 24902; // in miles
-        double widthInPixels = screenWidth;
         double milesPerPixel = equatorLength / 256;
         int zoomLevel = 1;
-        while ((milesPerPixel * widthInPixels) > d) {
+        while ((milesPerPixel * screenWidth) > d) {
             milesPerPixel /= 2;
             zoomLevel++;
         }
