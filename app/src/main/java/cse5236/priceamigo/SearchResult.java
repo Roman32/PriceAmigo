@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.location.Criteria;
 import android.location.Location;
@@ -25,6 +26,8 @@ import java.util.List;
 public class SearchResult extends Activity {
 
     LocationManager locationManager;
+    public static final String MyPREFERENCES = "MyPrefs" ;
+    SharedPreferences sharedpreferences;
 
 
     @Override
@@ -56,8 +59,8 @@ public class SearchResult extends Activity {
                     Point size = new Point();
                     display.getSize(size);
                     int width = size.x;
-                    //TODO get diameter remove hardcoded 4
-                    int radius = 4; //= get diameter from settings
+                    sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+                    Integer radius = sharedpreferences.getInt("radiusKey", 4); //= get diameter from settings
 
                     int zoom = calculateZoomLevel(width, radius);
 
