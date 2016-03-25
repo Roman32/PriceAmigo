@@ -1,9 +1,9 @@
 package cse5236.priceamigo;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.location.Criteria;
 import android.location.Location;
@@ -25,8 +25,6 @@ import java.util.List;
 public class SearchResult extends Activity {
 
     LocationManager locationManager;
-    public static final String MyPREFERENCES = "MyPrefs" ;
-    SharedPreferences sharedpreferences;
 
 
     @Override
@@ -49,25 +47,30 @@ public class SearchResult extends Activity {
             @Override
             public void onClick(View v) {
                 double x, y;
-                //TODO ERROR CHECK FOR NULL
-                Location location = getLastKnownLocation();
-                x = location.getLatitude();
-                y = location.getLongitude();
+                try {
+                    Location location = getLastKnownLocation();
+                    x = location.getLatitude();
+                    y = location.getLongitude();
 
-                Display display = getWindowManager().getDefaultDisplay();
-                Point size = new Point();
-                display.getSize(size);
-                int width = size.x;
-                sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-                Integer radius = sharedpreferences.getInt("radiusKey", 4); //= get diameter from settings
+                    Display display = getWindowManager().getDefaultDisplay();
+                    Point size = new Point();
+                    display.getSize(size);
+                    int width = size.x;
+                    //TODO get diameter remove hardcoded 4
+                    int radius = 4; //= get diameter from settings
 
-                int zoom = calculateZoomLevel(width, radius);
+                    int zoom = calculateZoomLevel(width, radius);
 
-                String url = "www.google.com/maps/search/" + getIntent().getStringExtra("store") + "/@" + x + "," + y + "," + zoom + "z";
+                    String url = "https://www.google.com/maps/search/" + getIntent().getStringExtra("store") + "/@" + x + "," + y + "," + zoom + "z";
 
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(url));
-                startActivity(i);
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(url));
+                    startActivity(i);
+                }catch (NullPointerException e){
+                    e.printStackTrace();
+                }catch (ActivityNotFoundException e){
+                    e.printStackTrace();
+                }
             }
         });
 
