@@ -11,7 +11,7 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 public class Scan extends AppCompatActivity {
-
+    String upc;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +35,9 @@ public class Scan extends AppCompatActivity {
             } else {
                 //Displays scan result in a toast
                 Log.d("MainActivity", "Scanned");
+                upc = result.getContents();
                 Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+                Log.d("Here is the UPC",upc);
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
