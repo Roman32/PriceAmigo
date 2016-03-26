@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.location.Criteria;
 import android.location.Location;
@@ -16,6 +17,7 @@ import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import org.w3c.dom.Text;
@@ -25,6 +27,8 @@ import java.util.List;
 public class SearchResult extends Activity {
 
     LocationManager locationManager;
+    public static final String MyPREFERENCES = "MyPrefs" ;
+    SharedPreferences sharedpreferences;
 
 
     @Override
@@ -43,6 +47,10 @@ public class SearchResult extends Activity {
         store.setText(getIntent().getStringExtra("store"));
 
         Button butt = (Button)findViewById(R.id.button);
+        if(getIntent().getStringExtra("store").equals("Amazon")){
+            butt.setVisibility(View.GONE);
+            butt.setEnabled(false);
+        }
         butt.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -56,8 +64,8 @@ public class SearchResult extends Activity {
                     Point size = new Point();
                     display.getSize(size);
                     int width = size.x;
-                    //TODO get diameter remove hardcoded 4
-                    int radius = 4; //= get diameter from settings
+                    sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+                    Integer radius = sharedpreferences.getInt("radiusKey", 4); //= get diameter from settings
 
                     int zoom = calculateZoomLevel(width, radius);
 
@@ -67,8 +75,8 @@ public class SearchResult extends Activity {
                     i.setData(Uri.parse(url));
                     startActivity(i);
                 }catch (NullPointerException e){
-                    e.printStackTrace();
-                }catch (ActivityNotFoundException e){
+                    Toast.makeText(SearchResult.this, "Turn on GPS",
+                            Toast.LENGTH_LONG).show();
                     e.printStackTrace();
                 }
             }
@@ -126,10 +134,9 @@ public class SearchResult extends Activity {
     private int calculateZoomLevel(int screenWidth, int r) {
         int d = 2*r;
         double equatorLength = 24902; // in miles
-        double widthInPixels = screenWidth;
         double milesPerPixel = equatorLength / 256;
         int zoomLevel = 1;
-        while ((milesPerPixel * widthInPixels) > d) {
+        while ((milesPerPixel * screenWidth) > d) {
             milesPerPixel /= 2;
             zoomLevel++;
         }
