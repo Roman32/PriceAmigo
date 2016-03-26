@@ -1,11 +1,13 @@
 package cse5236.priceamigo;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
@@ -15,9 +17,10 @@ import com.google.zxing.integration.android.IntentResult;
 
 public class Scan extends AppCompatActivity {
     String upc;
-    SharedPreferences sharedPreferences;
+    //SharedPreferences sharedPreferences = getSharedPreferences(Settings.MyPREFERENCES, MODE_PRIVATE);
     boolean walmart;
     boolean bestbuy;
+    DBHelper db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -35,6 +38,10 @@ public class Scan extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         WebScrape scraper = new WebScrape();
+        SharedPreferences sharedPreferences = getSharedPreferences(Settings.MyPREFERENCES, MODE_PRIVATE);
+        walmart = sharedPreferences.getBoolean("walmartKey", false);
+        bestbuy = sharedPreferences.getBoolean("bestbuyKey", false);
+        db = new DBHelper(getBaseContext());
         if(result != null) {
             if(result.getContents() == null) {
                 //If scan is cancelled displays cancelled toast
@@ -58,24 +65,27 @@ public class Scan extends AppCompatActivity {
                     startActivity(i);
                  */
                 String name = scraper.getNameFromWally(upc);
-                /*
-                if(sharedPreferences.getBoolean("walmart",walmart)) {
+
+                if(walmart) {
                     String price = scraper.scrapeWallyWorld(upc);
                     Intent i = new Intent(Scan.this, SearchResult.class);
                     i.putExtra("name", name);
                     i.putExtra("upc", upc);
                     i.putExtra("price", price);
                     i.putExtra("store", "Walmart");
+                    db.insert(upc,name,price,"Walmart");
                     startActivity(i);
-                }*/
-                String price = scraper.scrapeBB(name);
-                Intent i = new Intent(Scan.this, SearchResult.class);
-                i.putExtra("name", name);
-                i.putExtra("upc", upc);
-                i.putExtra("price", price);
-                i.putExtra("store", "Best Buy");
-                startActivity(i);
-
+                }
+                if(bestbuy) {
+                    String price = scraper.scrapeBB(name);
+                    Intent i = new Intent(Scan.this, SearchResult.class);
+                    i.putExtra("name", name);
+                    i.putExtra("upc", upc);
+                    i.putExtra("price", price);
+                    i.putExtra("store", "Best Buy");
+                    db.insert(upc,name,price,"Best Buy");
+                    startActivity(i);
+                }
 
                 //hard coded testing lines
                 //TODO delete later
