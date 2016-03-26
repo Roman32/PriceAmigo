@@ -65,9 +65,14 @@ public class Scan extends AppCompatActivity {
                     startActivity(i);
                  */
                 String name = scraper.getNameFromWally(upc);
-
+                String name2 = scraper.getItemName(upc);
+                if(name.equals("Item not found") && name2.equals("Item not found")){
+                    name = name;
+                }else if(name.equals("Item not found") && !name2.equals("Item not found")){
+                    name = name2;
+                }
                 if(walmart) {
-                    String price = scraper.scrapeWallyWorld(upc);
+                    String price = scraper.scrapeWallyWorld(name);
                     Intent i = new Intent(Scan.this, SearchResult.class);
                     i.putExtra("name", name);
                     i.putExtra("upc", upc);
