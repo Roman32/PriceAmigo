@@ -2,6 +2,7 @@ package cse5236.priceamigo;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -14,6 +15,9 @@ import com.google.zxing.integration.android.IntentResult;
 
 public class Scan extends AppCompatActivity {
     String upc;
+    SharedPreferences sharedPreferences;
+    boolean walmart;
+    boolean bestbuy;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -53,15 +57,25 @@ public class Scan extends AppCompatActivity {
                     i.putExtra("store", <store here as String>);
                     startActivity(i);
                  */
-                //String name = scraper.getItemName(upc);
-                //Toast.makeText(this,name,Toast.LENGTH_LONG).show();
-                String price = scraper.scrapeWallyWorld(upc);
-                Intent i = new Intent(Scan.this,SearchResult.class);
-                i.putExtra("name","name");
-                i.putExtra("upc",upc);
-                i.putExtra("price",price);
-                i.putExtra("store", "Wally");
+                String name = scraper.getNameFromWally(upc);
+                /*
+                if(sharedPreferences.getBoolean("walmart",walmart)) {
+                    String price = scraper.scrapeWallyWorld(upc);
+                    Intent i = new Intent(Scan.this, SearchResult.class);
+                    i.putExtra("name", name);
+                    i.putExtra("upc", upc);
+                    i.putExtra("price", price);
+                    i.putExtra("store", "Walmart");
+                    startActivity(i);
+                }*/
+                String price = scraper.scrapeBB(name);
+                Intent i = new Intent(Scan.this, SearchResult.class);
+                i.putExtra("name", name);
+                i.putExtra("upc", upc);
+                i.putExtra("price", price);
+                i.putExtra("store", "Best Buy");
                 startActivity(i);
+
 
                 //hard coded testing lines
                 //TODO delete later
