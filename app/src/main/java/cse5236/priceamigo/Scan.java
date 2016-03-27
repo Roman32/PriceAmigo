@@ -41,7 +41,7 @@ public class Scan extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(Settings.MyPREFERENCES, MODE_PRIVATE);
         walmart = sharedPreferences.getBoolean("walmartKey", false);
         bestbuy = sharedPreferences.getBoolean("bestbuyKey", false);
-        //db = new DBHelper(this);
+        DBHelper db = new DBHelper(this);
         if(result != null) {
             if(result.getContents() == null) {
                 //If scan is cancelled displays cancelled toast
@@ -85,8 +85,9 @@ public class Scan extends AppCompatActivity {
                     i.putExtra("store", "Walmart");
                     Item newItem = new Item(name,price,upc);
                     if(!name.equals("Item not found")) {
-                        //db.insert(upc,name,price,"Walmart");
+                        db.addResult(upc,name,price,"Walmart");
                     }
+                    //db.addResult(upc,name,price,"Walmart");
                     startActivity(i);
                 }
                 if(bestbuy) {
@@ -101,8 +102,9 @@ public class Scan extends AppCompatActivity {
                     i.putExtra("store", "Best Buy");
                     Item newItem = new Item(name,price,upc);
                     if(!name.equals("Item not found")) {
-                        //db.insert(upc,name,price,"Best Buy");
+                        db.addResult(upc,name,price,"Best Buy");
                     }
+                    //db.addResult(upc,name,price,"Best Buy");
                     startActivity(i);
                 }
 
