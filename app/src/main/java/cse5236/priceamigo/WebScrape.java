@@ -30,6 +30,7 @@ public class WebScrape extends AsyncTask {
             Element des = body.select("div.content-box-content").first();
             Element name = des.select("span.destxt").first();
             nameS = name.text();
+            System.out.println(nameS);
         }catch(Exception e){
             nameS = "Item not found";
         }

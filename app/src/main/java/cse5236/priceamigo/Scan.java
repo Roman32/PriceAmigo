@@ -41,7 +41,7 @@ public class Scan extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(Settings.MyPREFERENCES, MODE_PRIVATE);
         walmart = sharedPreferences.getBoolean("walmartKey", false);
         bestbuy = sharedPreferences.getBoolean("bestbuyKey", false);
-        db = new DBHelper(getBaseContext());
+        //db = new DBHelper(this);
         if(result != null) {
             if(result.getContents() == null) {
                 //If scan is cancelled displays cancelled toast
@@ -66,29 +66,43 @@ public class Scan extends AppCompatActivity {
                  */
                 String name = scraper.getNameFromWally(upc);
                 String name2 = scraper.getItemName(upc);
+
                 if(name.equals("Item not found") && name2.equals("Item not found")){
                     name = name;
                 }else if(name.equals("Item not found") && !name2.equals("Item not found")){
                     name = name2;
                 }
+
                 if(walmart) {
                     String price = scraper.scrapeWallyWorld(name);
+                    if((name.equals("Item not found"))){
+                        price = "No price found";
+                    }
                     Intent i = new Intent(Scan.this, SearchResult.class);
                     i.putExtra("name", name);
                     i.putExtra("upc", upc);
                     i.putExtra("price", price);
                     i.putExtra("store", "Walmart");
-                    db.insert(upc,name,price,"Walmart");
+                    Item newItem = new Item(name,price,upc);
+                    if(!name.equals("Item not found")) {
+                        //db.insert(upc,name,price,"Walmart");
+                    }
                     startActivity(i);
                 }
                 if(bestbuy) {
                     String price = scraper.scrapeBB(name);
+                    if((name.equals("Item not found"))){
+                        price = "No price found";
+                    }
                     Intent i = new Intent(Scan.this, SearchResult.class);
                     i.putExtra("name", name);
                     i.putExtra("upc", upc);
                     i.putExtra("price", price);
                     i.putExtra("store", "Best Buy");
-                    db.insert(upc,name,price,"Best Buy");
+                    Item newItem = new Item(name,price,upc);
+                    if(!name.equals("Item not found")) {
+                        //db.insert(upc,name,price,"Best Buy");
+                    }
                     startActivity(i);
                 }
 
