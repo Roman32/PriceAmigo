@@ -10,6 +10,7 @@ import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -21,17 +22,19 @@ public class Scan extends AppCompatActivity {
     boolean walmart;
     boolean bestbuy;
     DBHelper db;
+    IntentIntegrator integrator;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
-        IntentIntegrator integrator = new IntentIntegrator(this);
+        integrator = new IntentIntegrator(this);
         integrator.setDesiredBarcodeFormats(IntentIntegrator.ONE_D_CODE_TYPES);
         integrator.setPrompt("Scan a barcode");
         integrator.initiateScan();
-
+        integrator.setBeepEnabled(true);
+        integrator.setOrientationLocked(false);
     }
 
     @Override
@@ -52,8 +55,8 @@ public class Scan extends AppCompatActivity {
                 Log.d("MainActivity", "Scanned");
                 upc = result.getContents();
                 Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
-                final MediaPlayer beep = MediaPlayer.create(this, R.raw.beep);
-                beep.start();
+                //final MediaPlayer beep = MediaPlayer.create(this, R.raw.beep);
+                //beep.start();
                 //TODO
                 /*
                     in order to send the results to the results page, add this
@@ -122,6 +125,7 @@ public class Scan extends AppCompatActivity {
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
+
     }
 
 }

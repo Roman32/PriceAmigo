@@ -83,5 +83,17 @@ public class Settings extends AppCompatActivity {
             }
         });
 
+        Button delete = (Button) findViewById(R.id.delete);
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DBHelper db = new DBHelper(Settings.this);
+                db.deleteAll();
+                Toast.makeText(Settings.this, "Database cleared",
+                        Toast.LENGTH_LONG).show();
+
+                startActivity(new Intent(Settings.this, MainMenu.class));
+            }
+        });
     }
 }

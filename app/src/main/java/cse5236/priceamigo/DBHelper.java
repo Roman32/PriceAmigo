@@ -37,6 +37,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public DBHelper(Context context){
         super(context, DATABASE_NAME, null, 1);
+        this.db = super.getReadableDatabase();
     }
 
     //Creating tables
@@ -70,7 +71,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
         //Delete last row in DB when there are more than 10 results
         if(numberOfResults > 10){
-            db.execSQL("DELETE FROM " + TABLE_NAME + " WHERE id = min(id)");
+            //db.execSQL("DELETE FROM " + TABLE_NAME + " WHERE id = min(id)");
+            db.delete(TABLE_NAME,"id = MIN(id)",null);
         }
 
         // Inserting Row
