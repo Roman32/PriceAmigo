@@ -86,9 +86,9 @@ public class Scan extends AppCompatActivity {
                     i.putExtra("upc", upc);
                     i.putExtra("price", price);
                     i.putExtra("store", "Walmart");
-                    Item newItem = new Item(name,price,upc);
+                    Item newItem = new Item(50,upc,name,"Walmart",price);
                     if(!name.equals("Item not found")) {
-                        db.addResult(upc,name,price,"Walmart");
+                        db.addItem(newItem);
                     }
                     //db.addResult(upc,name,price,"Walmart");
                     startActivity(i);
@@ -103,9 +103,9 @@ public class Scan extends AppCompatActivity {
                     i.putExtra("upc", upc);
                     i.putExtra("price", price);
                     i.putExtra("store", "Best Buy");
-                    Item newItem = new Item(name,price,upc);
+                    Item newItem = new Item(upc,name,"Best Buy", price);
                     if(!name.equals("Item not found")) {
-                        db.addResult(upc,name,price,"Best Buy");
+                        db.addItem(newItem);
                     }
                     //db.addResult(upc,name,price,"Best Buy");
                     startActivity(i);

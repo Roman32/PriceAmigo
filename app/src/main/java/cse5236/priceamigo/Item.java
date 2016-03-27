@@ -5,48 +5,84 @@ package cse5236.priceamigo;
  */
 public class Item {
     //Instance variables
-    String itemName;
-    String price;
+    int id;
     String upc;
+    String itemName;
+    String supplier;
+    String price;
 
     //Default Constructor
-    public Item(){
+    public Item() {
 
     }
 
     //Normal Constructor
-    public Item(String name,String price,String upc){
-        this.itemName = name;
-        this.price = price;
+    public Item(int id, String upc, String name, String supplier, String price) {
+        this.id = id;
         this.upc = upc;
+        this.itemName = name;
+        this.supplier = supplier;
+        this.price = price;
+    }
+
+    public Item(String upc, String name, String supplier, String price) {
+        this.upc = upc;
+        this.itemName = name;
+        this.supplier = supplier;
+        this.price = price;
     }
 
     /**
      * Probably won't need the setters but just in case.
      */
 
-    //Sets name
-    public void setName(String name){
-        this.itemName = name;
+    // setting id
+    public void setID(int id) {
+        this.id = id;
     }
-    //returns name
-    public String getName(){
-        return this.itemName;
+
+    // returns the ID
+    public int getID() {
+        return this.id;
     }
-    //sets the price
-    public void setPrice(String price){
-        this.price = price;
-    }
-    //returns the price
-    public String getPrice(){
-        return this.price;
-    }
+
     //set upc
-    public void setUpc(String upc){
+    public void setUpc(String upc) {
         this.upc = upc;
     }
 
-    public String getUpc(){
+    //returns the upc
+    public String getUpc() {
         return this.upc;
+    }
+
+    //Sets name
+    public void setName(String name) {
+        this.itemName = name;
+    }
+
+    //returns name
+    public String getName() {
+        return this.itemName;
+    }
+
+    //sets the supplier
+    public void setSupplier(String supplier) {
+        this.supplier = supplier;
+    }
+
+    //returns the supplier
+    public String getSupplier() {
+        return this.supplier;
+    }
+
+    //sets the price
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    //returns the price
+    public String getPrice() {
+        return this.price;
     }
 }

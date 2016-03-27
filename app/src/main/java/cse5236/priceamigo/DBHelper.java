@@ -57,20 +57,20 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addResult(String upc, String name, String supplier, String price) {
+    public void addItem(Item item) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put("upc", upc);
-        values.put("name", name);
-        values.put("supplier", supplier);
-        values.put("price", price);
+        values.put(KEY_UPC, item.getUpc());
+        values.put(KEY_NAME, item.getName());
+        values.put(KEY_SUPPLIER, item.getSupplier());
+        values.put(KEY_PRICE, item.getPrice());
 
-        int numberOfResults = getResultsCount();
+        int numberOfResults = getItemCount();
 
         //Delete last row in DB when there are more than 10 results
-        if(numberOfResults > 10){
+        if (numberOfResults > 10) {
             //db.execSQL("DELETE FROM " + TABLE_NAME + " WHERE id = min(id)");
             db.delete(TABLE_NAME,"id = MIN(id)",null);
         }
@@ -81,7 +81,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     // Getting single result
-    public List<String> getResult(int id) {
+    public Item getItem(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_NAME, new String[] { KEY_ID,
@@ -90,19 +90,14 @@ public class DBHelper extends SQLiteOpenHelper {
         if (cursor != null)
             cursor.moveToFirst();
 
-        List<String> result = new ArrayList<String>();
-        result.add(cursor.getString(0));
-        result.add(cursor.getString(1));
-        result.add(cursor.getString(2));
-        result.add(cursor.getString(3));
-        result.add(cursor.getString(4));
-
-        // return result
-        return result;
+        Item item = new Item(Integer.parseInt(cursor.getString(0)),
+                cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
+        // return contact
+        return item;
     }
 
     // Getting results count
-    public int getResultsCount() {
+    public int getItemCount() {
         String countQuery = "SELECT  * FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
@@ -113,31 +108,36 @@ public class DBHelper extends SQLiteOpenHelper {
         return count;
     }
 
-    public void deleteAll() {
-        this.db.delete(TABLE_NAME, null, null);
+    // Getting All Items
+    public List<Item> getAllItems() {
+        List<Item> itemList = new ArrayList<Item>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_NAME;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Item item = new Item();
+                item.setID(Integer.parseInt(cursor.getString(0)));
+                item.setUpc(cursor.getString(1));
+                item.setName(cursor.getString(2));
+                item.setSupplier(cursor.getString(3));
+                item.setPrice(cursor.getString(4));
+                // Adding item to list
+                itemList.add(item);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+
+        // return contact list
+        return itemList;
     }
 
-    //We can modify this to pull results
-    public List<List<String>> getResults() {
-        List<List<String>> list = new ArrayList<List<String>>();
-        Cursor cursor =
-                this.db.query(TABLE_NAME,
-                        new String[] { "upc","timestamp"},
-                        "upc != '0'",
-                        null, null, null, "timestamp desc");
-
-        if (cursor.moveToFirst()) do {
-            List<String> result = new ArrayList<String>();
-            result.add(cursor.getString(0));
-            result.add(cursor.getString(1));
-            result.add(cursor.getString(2));
-            result.add(cursor.getString(3));
-            list.add(result);
-
-        } while (cursor.moveToNext());
-        if (cursor != null && !cursor.isClosed()) {
-            cursor.close();
-        }
-        return list;
+    public void deleteAll() {
+        this.db.delete(TABLE_NAME, null, null);
     }
 }
