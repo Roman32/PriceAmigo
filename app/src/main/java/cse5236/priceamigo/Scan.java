@@ -41,7 +41,8 @@ public class Scan extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(Settings.MyPREFERENCES, MODE_PRIVATE);
         walmart = sharedPreferences.getBoolean("walmartKey", false);
         bestbuy = sharedPreferences.getBoolean("bestbuyKey", false);
-        db = new DBHelper(getBaseContext());
+//        db = new DBHelper(getBaseContext());
+        DBHelper db = new DBHelper(this);
         if(result != null) {
             if(result.getContents() == null) {
                 //If scan is cancelled displays cancelled toast
@@ -65,12 +66,12 @@ public class Scan extends AppCompatActivity {
                     startActivity(i);
                  */
                 String name = scraper.getNameFromWally(upc);
-                String name2 = scraper.getItemName(upc);
-                if(name.equals("Item not found") && name2.equals("Item not found")){
-                    name = name;
-                }else if(name.equals("Item not found") && !name2.equals("Item not found")){
-                    name = name2;
-                }
+//                String name2 = scraper.getItemName(upc);
+//                if(name.equals("Item not found") && name2.equals("Item not found")){
+//                    name = name;
+//                }else if(name.equals("Item not found") && !name2.equals("Item not found")){
+//                    name = name2;
+//                }
                 if(walmart) {
                     String price = scraper.scrapeWallyWorld(name);
                     Intent i = new Intent(Scan.this, SearchResult.class);
@@ -78,7 +79,7 @@ public class Scan extends AppCompatActivity {
                     i.putExtra("upc", upc);
                     i.putExtra("price", price);
                     i.putExtra("store", "Walmart");
-                    db.insert(upc,name,price,"Walmart");
+                    db.addResult(upc,name,price,"Walmart");
                     startActivity(i);
                 }
                 if(bestbuy) {
@@ -88,7 +89,7 @@ public class Scan extends AppCompatActivity {
                     i.putExtra("upc", upc);
                     i.putExtra("price", price);
                     i.putExtra("store", "Best Buy");
-                    db.insert(upc,name,price,"Best Buy");
+                    db.addResult(upc,name,price,"Best Buy");
                     startActivity(i);
                 }
 
