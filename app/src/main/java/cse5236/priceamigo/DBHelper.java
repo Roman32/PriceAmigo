@@ -71,8 +71,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
         //Delete last row in DB when there are more than 10 results
         if (numberOfResults > 10) {
-            //db.execSQL("DELETE FROM " + TABLE_NAME + " WHERE id = min(id)");
-            db.delete(TABLE_NAME,"id = MIN(id)",null);
+            db.execSQL("DELETE FROM " + TABLE_NAME + " WHERE id = (SELECT MIN(id) FROM "+TABLE_NAME+")");
+            //db.delete(TABLE_NAME,"id = MIN(id)",null);
         }
 
         // Inserting Row

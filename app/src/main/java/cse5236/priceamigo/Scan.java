@@ -15,8 +15,9 @@ import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.journeyapps.barcodescanner.CaptureActivity;
 
-public class Scan extends AppCompatActivity {
+public class Scan extends CaptureActivity {
     String upc;
     //SharedPreferences sharedPreferences = getSharedPreferences(Settings.MyPREFERENCES, MODE_PRIVATE);
     boolean walmart;
@@ -32,9 +33,8 @@ public class Scan extends AppCompatActivity {
         integrator = new IntentIntegrator(this);
         integrator.setDesiredBarcodeFormats(IntentIntegrator.ONE_D_CODE_TYPES);
         integrator.setPrompt("Scan a barcode");
-        integrator.initiateScan();
         integrator.setBeepEnabled(true);
-        integrator.setOrientationLocked(false);
+        integrator.initiateScan();
     }
 
     @Override
@@ -45,7 +45,7 @@ public class Scan extends AppCompatActivity {
         walmart = sharedPreferences.getBoolean("walmartKey", false);
         bestbuy = sharedPreferences.getBoolean("bestbuyKey", false);
         DBHelper db = new DBHelper(this);
-        if(result != null) {
+        if(result != null && resultCode == RESULT_OK) {
             if(result.getContents() == null) {
                 //If scan is cancelled displays cancelled toast
                 Log.d("MainActivity", "Cancelled scan");
@@ -123,9 +123,10 @@ public class Scan extends AppCompatActivity {
                 */
             }
         } else {
-            super.onActivityResult(requestCode, resultCode, data);
+            //super.onActivityResult(requestCode, resultCode, data);
+            Intent goBacktoMain = new Intent(Scan.this,MainMenu.class);
+            startActivity(goBacktoMain);
         }
-
     }
 
 }
