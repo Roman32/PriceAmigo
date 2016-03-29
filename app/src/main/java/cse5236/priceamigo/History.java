@@ -20,11 +20,6 @@ public class History extends AppCompatActivity {
 
         DBHelper db = new DBHelper(this);
         final List<Item> list = db.getAllItems();
-        for(int i = 0; i < list.size(); i++){
-            if(list.get(i).getName().length() >= 15){
-                list.get(i).setName(list.get(i).getName().substring(0,15) + "...");
-            }
-        }
 
         TextView name1 = (TextView)findViewById(R.id.name1);
         name1.setVisibility(View.INVISIBLE);
@@ -248,7 +243,11 @@ public class History extends AppCompatActivity {
 
         for(int i = 0; i < list.size(); i++){
             names.get(i).setVisibility(View.VISIBLE);
-            names.get(i).setText(list.get(i).getName());
+            if(list.get(i).getName().length() >= 15){
+                names.get(i).setText(list.get(i).getName().substring(0,15) + "...");
+            }else {
+                names.get(i).setText(list.get(i).getName());
+            }
             buttons.get(i).setVisibility(View.VISIBLE);
             buttons.get(i).setEnabled(true);
         }
