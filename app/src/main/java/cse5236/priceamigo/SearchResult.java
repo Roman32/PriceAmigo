@@ -48,7 +48,7 @@ public class SearchResult extends Activity {
 
         Button butt = (Button)findViewById(R.id.button);
         if(getIntent().getStringExtra("store").equals("Amazon")){
-            butt.setVisibility(View.GONE);
+            butt.setVisibility(View.INVISIBLE);
             butt.setEnabled(false);
         }
         butt.setOnClickListener(new View.OnClickListener(){
