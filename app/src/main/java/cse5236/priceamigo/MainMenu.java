@@ -6,6 +6,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
+import java.io.IOException;
+import java.net.InetAddress;
 
 
 public class MainMenu extends AppCompatActivity {
@@ -19,7 +23,12 @@ public class MainMenu extends AppCompatActivity {
         scanButt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainMenu.this, Scan.class));
+                if(isInternetAvailable()) {
+                    startActivity(new Intent(MainMenu.this, Scan.class));
+                }else{
+                    Toast.makeText(MainMenu.this, "Must be connected to internet to scan",
+                            Toast.LENGTH_LONG).show();
+                }
             }
         });
         Button settButt = (Button)findViewById(R.id.settings_button);
@@ -72,5 +81,20 @@ public class MainMenu extends AppCompatActivity {
     protected void onPause(){
         super.onPause();
         Log.d("MainMenu", "In on Pause");
+    }
+
+    public boolean isInternetAvailable() {
+
+        Runtime runtime = Runtime.getRuntime();
+        try {
+
+            Process ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8");
+            int     exitValue = ipProcess.waitFor();
+            return (exitValue == 0);
+
+        } catch (IOException e)          { e.printStackTrace(); }
+        catch (InterruptedException e) { e.printStackTrace(); }
+
+        return false;
     }
 }
