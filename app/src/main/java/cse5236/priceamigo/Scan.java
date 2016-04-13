@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
@@ -42,7 +43,7 @@ public class Scan extends CaptureActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(isInternetAvailable()) {
+        if(checkInternetConnection()) {
             IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
             WebScrape scraper = new WebScrape();
             SharedPreferences sharedPreferences = getSharedPreferences(Settings.MyPREFERENCES, MODE_PRIVATE);
@@ -80,40 +81,51 @@ public class Scan extends CaptureActivity {
                         name = name2;
                     }
 
+                    Item walmartItem = null;
+                    Item bestbuyItem = null;
+                    Intent wally = null;
+                    Intent bestb = null;
+
                     if (walmart) {
                         String price = scraper.scrapeWallyWorld(name);
                         if ((name.equals("Item not found"))) {
                             price = "No price found";
                         }
-                        Intent i = new Intent(Scan.this, SearchResult.class);
-                        i.putExtra("name", name);
-                        i.putExtra("upc", upc);
-                        i.putExtra("price", price);
-                        i.putExtra("store", "Walmart");
-                        Item newItem = new Item(50, upc, name, "Walmart", price);
+                        wally = new Intent(Scan.this, SearchResult.class);
+                        wally.putExtra("name", name);
+                        wally.putExtra("upc", upc);
+                        wally.putExtra("price", price);
+                        wally.putExtra("store", "Walmart");
+                        walmartItem = new Item(upc, name, "Walmart", price);
+
                         if (!name.equals("Item not found")) {
-                            db.addItem(newItem);
+                            db.addItem(walmartItem);
                         }
                         //db.addResult(upc,name,price,"Walmart");
-                        startActivity(i);
+                        startActivity(wally);
+
                     }
                     if (bestbuy) {
                         String price = scraper.scrapeBB(name);
                         if ((name.equals("Item not found"))) {
                             price = "No price found";
                         }
-                        Intent i = new Intent(Scan.this, SearchResult.class);
-                        i.putExtra("name", name);
-                        i.putExtra("upc", upc);
-                        i.putExtra("price", price);
-                        i.putExtra("store", "Best Buy");
-                        Item newItem = new Item(upc, name, "Best Buy", price);
+                        bestb = new Intent(Scan.this, SearchResult.class);
+                        bestb.putExtra("name", name);
+                        bestb.putExtra("upc", upc);
+                        bestb.putExtra("price", price);
+                        bestb.putExtra("store", "Best Buy");
+                        bestbuyItem = new Item(upc, name, "Best Buy", price);
+
                         if (!name.equals("Item not found")) {
-                            db.addItem(newItem);
+                            db.addItem(bestbuyItem);
                         }
                         //db.addResult(upc,name,price,"Best Buy");
-                        startActivity(i);
+                        startActivity(bestb);
+
                     }
+
+
 
                     //hard coded testing lines
                     //TODO delete later
@@ -139,19 +151,14 @@ public class Scan extends CaptureActivity {
         }
     }
 
-    public boolean isInternetAvailable() {
+    public boolean checkInternetConnection() {
+        ConnectivityManager cm = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isAvailable() && cm.getActiveNetworkInfo().isConnected()) {
+            return true;
 
-        Runtime runtime = Runtime.getRuntime();
-        try {
-
-            Process ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8");
-            int     exitValue = ipProcess.waitFor();
-            return (exitValue == 0);
-
-        } catch (IOException e)          { e.printStackTrace(); }
-        catch (InterruptedException e) { e.printStackTrace(); }
-
-        return false;
+        } else {
+            return false;
+        }
     }
 
 }

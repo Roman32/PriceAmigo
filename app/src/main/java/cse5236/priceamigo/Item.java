@@ -13,7 +13,10 @@ public class Item {
 
     //Default Constructor
     public Item() {
-
+        this.upc = "";
+        this.itemName = "";
+        this.supplier = "";
+        this.price = "";
     }
 
     //Normal Constructor

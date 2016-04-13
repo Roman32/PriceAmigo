@@ -12,10 +12,10 @@ import org.jsoup.select.Elements;
 /**
  * Created by Roman on 3/23/2016.
  */
-public class WebScrape extends AsyncTask {
+public class WebScrape extends AsyncTask<Void,Void,Void> {
 
     @Override
-    protected Object doInBackground(Object[] params) {
+    protected Void doInBackground(Void[] params) {
         return null;
     }
 
