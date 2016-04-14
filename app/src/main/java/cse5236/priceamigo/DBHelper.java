@@ -60,7 +60,6 @@ public class DBHelper extends SQLiteOpenHelper {
     public void addItem(Item item) {
 
         SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
         values.put(KEY_UPC, item.getUpc());
         values.put(KEY_NAME, item.getName());

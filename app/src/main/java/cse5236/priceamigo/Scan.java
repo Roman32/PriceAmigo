@@ -60,18 +60,7 @@ public class Scan extends CaptureActivity {
                     Log.d("MainActivity", "Scanned");
                     upc = result.getContents();
                     Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
-                    //final MediaPlayer beep = MediaPlayer.create(this, R.raw.beep);
-                    //beep.start();
-                    //TODO
-                    /*
-                        in order to send the results to the results page, add this
-                        Intent i = new Intent(Scan.this,SearchResult.class);
-                        i.putExtra("name", <item name here as String>);
-                        i.putExtra("upc", <upc here as String>);
-                        i.putExtra("price", <price here as String>);
-                        i.putExtra("store", <store here as String>);
-                        startActivity(i);
-                     */
+
                     String name = scraper.getNameFromWally(upc);
                     String name2 = scraper.getItemName(upc);
 
@@ -97,13 +86,6 @@ public class Scan extends CaptureActivity {
                         wally.putExtra("price", price);
                         wally.putExtra("store", "Walmart");
                         walmartItem = new Item(upc, name, "Walmart", price);
-
-                        if (!name.equals("Item not found")) {
-                            db.addItem(walmartItem);
-                        }
-                        //db.addResult(upc,name,price,"Walmart");
-                        startActivity(wally);
-
                     }
                     if (bestbuy) {
                         String price = scraper.scrapeBB(name);
@@ -116,27 +98,43 @@ public class Scan extends CaptureActivity {
                         bestb.putExtra("price", price);
                         bestb.putExtra("store", "Best Buy");
                         bestbuyItem = new Item(upc, name, "Best Buy", price);
-
-                        if (!name.equals("Item not found")) {
-                            db.addItem(bestbuyItem);
-                        }
-                        //db.addResult(upc,name,price,"Best Buy");
-                        startActivity(bestb);
-
                     }
 
+                    if(!name.equals("Item not found")){
+                        Double wallyPrice = 0.0;
+                        Double bestbuyPrice = 0.0;
+                        if(walmart && !walmartItem.getName().equals("Item not found") && !walmartItem.getPrice().equals("No price found!")){
+                            wallyPrice = Double.parseDouble(walmartItem.getPrice().substring(1));
+                        }
+                        if(bestbuy && !bestbuyItem.getName().equals("Item not found") && !bestbuyItem.getPrice().equals("No price found!")){
+                            bestbuyPrice = Double.parseDouble(bestbuyItem.getPrice().substring(1));
+                        }
 
+                        if(walmart && bestbuy && (wallyPrice < bestbuyPrice)){
+                            db.addItem(walmartItem);
+                            startActivity(wally);
+                        }else if(walmart && bestbuy && (bestbuyPrice < wallyPrice)) {
+                            db.addItem(bestbuyItem);
+                            startActivity(bestb);
+                        }else if(walmart && bestbuy && (bestbuyPrice == wallyPrice)){
+                            db.addItem(bestbuyItem);
+                            db.addItem(walmartItem);
+                            startActivity(bestb);
+                            startActivity(wally);
+                        }else{
+                            if(walmart){
+                                db.addItem(walmartItem);
+                                startActivity(wally);
+                            }else if(bestbuy){
+                                db.addItem(bestbuyItem);
+                                startActivity(bestb);
+                            }else{
+                                startActivity(wally);
+                            }
+                        }
+                    }
 
-                    //hard coded testing lines
-                    //TODO delete later
-                    /*
-                    Intent i = new Intent(Scan.this,SearchResult.class);
-                    i.putExtra("name", "Android Programming: The Big Nerd Ranch Guide");
-                    i.putExtra("upc", "9780134171456");
-                    i.putExtra("price", "$27.30");
-                    i.putExtra("store", "Walmart");
-                    startActivity(i);
-                    */
+                    db.close();
                 }
             } else {
                 //super.onActivityResult(requestCode, resultCode, data);
