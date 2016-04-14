@@ -5,6 +5,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import org.jsoup.*;
+import org.jsoup.helper.HttpConnection;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
