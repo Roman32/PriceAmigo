@@ -65,6 +65,7 @@ public class History extends AppCompatActivity {
                     i.putExtra("upc", list.get(0).getUpc());
                     i.putExtra("price", list.get(0).getPrice());
                     i.putExtra("store", list.get(0).getSupplier());
+                    i.putExtra("historyFlag", true);
                     startActivity(i);
                 }
             });
@@ -83,6 +84,7 @@ public class History extends AppCompatActivity {
                     i.putExtra("upc", list.get(1).getUpc());
                     i.putExtra("price", list.get(1).getPrice());
                     i.putExtra("store", list.get(1).getSupplier());
+                    i.putExtra("historyFlag", true);
                     startActivity(i);
                 }
             });
@@ -100,6 +102,7 @@ public class History extends AppCompatActivity {
                     i.putExtra("upc", list.get(2).getUpc());
                     i.putExtra("price", list.get(2).getPrice());
                     i.putExtra("store", list.get(2).getSupplier());
+                    i.putExtra("historyFlag", true);
                     startActivity(i);
                 }
             });
@@ -117,6 +120,7 @@ public class History extends AppCompatActivity {
                     i.putExtra("upc", list.get(3).getUpc());
                     i.putExtra("price", list.get(3).getPrice());
                     i.putExtra("store", list.get(3).getSupplier());
+                    i.putExtra("historyFlag", true);
                     startActivity(i);
                 }
             });
@@ -134,6 +138,7 @@ public class History extends AppCompatActivity {
                     i.putExtra("upc", list.get(4).getUpc());
                     i.putExtra("price", list.get(4).getPrice());
                     i.putExtra("store", list.get(4).getSupplier());
+                    i.putExtra("historyFlag", true);
                     startActivity(i);
                 }
             });
@@ -151,6 +156,7 @@ public class History extends AppCompatActivity {
                     i.putExtra("upc", list.get(5).getUpc());
                     i.putExtra("price", list.get(5).getPrice());
                     i.putExtra("store", list.get(5).getSupplier());
+                    i.putExtra("historyFlag", true);
                     startActivity(i);
                 }
             });
@@ -168,6 +174,7 @@ public class History extends AppCompatActivity {
                     i.putExtra("upc", list.get(6).getUpc());
                     i.putExtra("price", list.get(6).getPrice());
                     i.putExtra("store", list.get(6).getSupplier());
+                    i.putExtra("historyFlag", true);
                     startActivity(i);
                 }
             });
@@ -185,6 +192,7 @@ public class History extends AppCompatActivity {
                     i.putExtra("upc", list.get(7).getUpc());
                     i.putExtra("price", list.get(7).getPrice());
                     i.putExtra("store", list.get(7).getSupplier());
+                    i.putExtra("historyFlag", true);
                     startActivity(i);
                 }
             });
@@ -202,6 +210,7 @@ public class History extends AppCompatActivity {
                     i.putExtra("upc", list.get(8).getUpc());
                     i.putExtra("price", list.get(8).getPrice());
                     i.putExtra("store", list.get(8).getSupplier());
+                    i.putExtra("historyFlag", true);
                     startActivity(i);
                 }
             });
@@ -219,6 +228,7 @@ public class History extends AppCompatActivity {
                     i.putExtra("upc", list.get(9).getUpc());
                     i.putExtra("price", list.get(9).getPrice());
                     i.putExtra("store", list.get(9).getSupplier());
+                    i.putExtra("historyFlag", true);
                     startActivity(i);
                 }
             });
@@ -252,8 +262,11 @@ public class History extends AppCompatActivity {
             buttons.get(i).setEnabled(true);
         }
 
+    }
 
-
-
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(History.this, MainMenu.class);
+        startActivity(i);
     }
 }

@@ -71,8 +71,8 @@ public class SearchResult extends Activity {
 
                     String url = "https://www.google.com/maps/search/" + getIntent().getStringExtra("store") + "/@" + x + "," + y + "," + zoom + "z";
 
-                    Intent i = new Intent(Intent.ACTION_VIEW);
-                    i.setData(Uri.parse(url));
+                    Intent i = new Intent(SearchResult.this,Map.class);
+                    i.putExtra("url", url);
                     startActivity(i);
                 }catch (NullPointerException e){
                     Toast.makeText(SearchResult.this, "Turn on GPS",
@@ -83,6 +83,17 @@ public class SearchResult extends Activity {
         });
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(SearchResult.this, Scan.class);
+        Intent j = new Intent(SearchResult.this, History.class);
+        if(getIntent().getBooleanExtra("historyFlag", false)){
+            startActivity(j);
+        }else{
+            startActivity(i);
+        }
     }
 
     public Location getLocation(){
