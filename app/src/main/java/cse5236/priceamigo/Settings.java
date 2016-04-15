@@ -27,22 +27,17 @@ public class Settings extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         final CheckBox walmartButton = (CheckBox) findViewById(R.id.walmart);
-        final CheckBox amazonButton = (CheckBox) findViewById(R.id.amazon);
-        final CheckBox targetButton = (CheckBox) findViewById(R.id.target);
         final CheckBox bestbuyButton = (CheckBox) findViewById(R.id.bestbuy);
         final EditText radiusButton = (EditText) findViewById(R.id.radius);
 
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         boolean walmartState = sharedpreferences.getBoolean(walmart, false);
-        boolean amazonState = sharedpreferences.getBoolean(amazon,false);
-        boolean targetState = sharedpreferences.getBoolean(target, false);
         boolean bestbuyState = sharedpreferences.getBoolean(bestbuy, false);
         Integer radiusValue = sharedpreferences.getInt(radius, -1);
 
-        if((walmartState||amazonState||targetState||bestbuyState) && radiusValue != -1){
+        //Loads preferences to the checkboxes and radius value if preferences are available to load
+        if((walmartState||bestbuyState) && radiusValue != -1){
             walmartButton.setChecked(walmartState);
-            amazonButton.setChecked(amazonState);
-            targetButton.setChecked(targetState);
             bestbuyButton.setChecked(bestbuyState);
             radiusButton.setText(radiusValue.toString());
         }
@@ -51,12 +46,10 @@ public class Settings extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 boolean walmartState = walmartButton.isChecked();
-                boolean amazonState = amazonButton.isChecked();
-                boolean targetState = targetButton.isChecked();
                 boolean bestbuyState = bestbuyButton.isChecked();
                 String radiusValue = radiusButton.getText().toString();
 
-                if(!(walmartState||amazonState||targetState||bestbuyState)){
+                if(!(walmartState||bestbuyState)){
                     Toast.makeText(Settings.this, "Choose at least one store",
                             Toast.LENGTH_LONG).show();
                 }else if(radiusValue.equals("")){
@@ -68,8 +61,6 @@ public class Settings extends AppCompatActivity {
                     SharedPreferences.Editor editor = sharedpreferences.edit();
 
                     editor.putBoolean(walmart, walmartState);
-                    editor.putBoolean(amazon, amazonState);
-                    editor.putBoolean(target, targetState);
                     editor.putBoolean(bestbuy, bestbuyState);
                     editor.putInt(radius, radiusValueInt);
                     editor.commit();
