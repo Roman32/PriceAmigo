@@ -14,9 +14,9 @@ public class Item {
     //Default Constructor
     public Item() {
         this.upc = "";
-        this.itemName = "";
+        this.itemName = "Item not found";
         this.supplier = "";
-        this.price = "";
+        this.price = "No price found!";
     }
 
     //Normal Constructor

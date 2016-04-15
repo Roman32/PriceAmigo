@@ -20,6 +20,7 @@ import com.journeyapps.barcodescanner.CaptureActivity;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.text.NumberFormat;
 
 public class Scan extends CaptureActivity {
     String upc;
@@ -70,15 +71,18 @@ public class Scan extends CaptureActivity {
                         name = name2;
                     }
 
-                    Item walmartItem = null;
-                    Item bestbuyItem = null;
+                    Item walmartItem = new Item();
+                    Item bestbuyItem = new Item();
                     Intent wally = null;
                     Intent bestb = null;
 
                     if (walmart) {
                         String price = scraper.scrapeWallyWorld(name);
                         if ((name.equals("Item not found"))) {
-                            price = "No price found";
+                            price = "No price found!";
+                        }
+                        if(price.trim().equals("")){
+                            price = "No price found!";
                         }
                         wally = new Intent(Scan.this, SearchResult.class);
                         wally.putExtra("name", name);
@@ -90,7 +94,10 @@ public class Scan extends CaptureActivity {
                     if (bestbuy) {
                         String price = scraper.scrapeBB(name);
                         if ((name.equals("Item not found"))) {
-                            price = "No price found";
+                            price = "No price found!";
+                        }
+                        if(price.trim().equals("")){
+                            price = "No price found!";
                         }
                         bestb = new Intent(Scan.this, SearchResult.class);
                         bestb.putExtra("name", name);
@@ -101,13 +108,17 @@ public class Scan extends CaptureActivity {
                     }
 
                     if(!name.equals("Item not found")){
-                        Double wallyPrice = 0.0;
-                        Double bestbuyPrice = 0.0;
-                        if(walmart && !walmartItem.getName().equals("Item not found") && !walmartItem.getPrice().equals("No price found!")){
-                            wallyPrice = Double.parseDouble(walmartItem.getPrice().substring(1));
+                        Double wallyPrice = Double.MAX_VALUE;
+                        Double bestbuyPrice = Double.MAX_VALUE;
+                        if(walmart && !walmartItem.getName().equals("Item not found") && !walmartItem.getPrice().equals("No price found!") && walmartItem.getPrice()!= null){
+                            if(walmartItem.getPrice().length() > 0) {
+                                wallyPrice = Double.parseDouble(walmartItem.getPrice());
+                            }
                         }
-                        if(bestbuy && !bestbuyItem.getName().equals("Item not found") && !bestbuyItem.getPrice().equals("No price found!")){
-                            bestbuyPrice = Double.parseDouble(bestbuyItem.getPrice().substring(1));
+                        if(bestbuy && !bestbuyItem.getName().equals("Item not found") && !bestbuyItem.getPrice().equals("No price found!")&& bestbuyItem.getPrice() != null){
+                            if(bestbuyItem.getPrice().length() > 0) {
+                                bestbuyPrice = Double.parseDouble(bestbuyItem.getPrice());
+                            }
                         }
 
                         if(walmart && bestbuy && (wallyPrice < bestbuyPrice)){
@@ -116,24 +127,35 @@ public class Scan extends CaptureActivity {
                         }else if(walmart && bestbuy && (bestbuyPrice < wallyPrice)) {
                             db.addItem(bestbuyItem);
                             startActivity(bestb);
-                        }else if(walmart && bestbuy && (bestbuyPrice == wallyPrice)){
+                        }else if(walmart && bestbuy && (bestbuyPrice == wallyPrice) && wallyPrice != Double.MAX_VALUE){
                             db.addItem(bestbuyItem);
                             db.addItem(walmartItem);
                             startActivity(bestb);
                             startActivity(wally);
                         }else{
-                            if(walmart){
+                            if(walmart && wallyPrice!= Double.MAX_VALUE){
                                 db.addItem(walmartItem);
                                 startActivity(wally);
-                            }else if(bestbuy){
+                            }else if(bestbuy && bestbuyPrice != Double.MAX_VALUE){
                                 db.addItem(bestbuyItem);
                                 startActivity(bestb);
                             }else{
-                                startActivity(wally);
+                                Intent notFound = new Intent(Scan.this,SearchResult.class);
+                                notFound.putExtra("name", "Item Not Found");
+                                notFound.putExtra("upc", upc);
+                                notFound.putExtra("price", "No price found!");
+                                notFound.putExtra("store", "Unavailable");
+                                startActivity(notFound);
                             }
                         }
+                    }else{
+                        Intent notFound = new Intent(Scan.this,SearchResult.class);
+                        notFound.putExtra("name", "Item Not Found");
+                        notFound.putExtra("upc", upc);
+                        notFound.putExtra("price", "No price found!");
+                        notFound.putExtra("store", "Unavailable");
+                        startActivity(notFound);
                     }
-
                     db.close();
                 }
             } else {

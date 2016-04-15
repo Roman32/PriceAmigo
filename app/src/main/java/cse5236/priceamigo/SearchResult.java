@@ -43,7 +43,11 @@ public class SearchResult extends Activity {
 
         name.setText(getIntent().getStringExtra("name"));
         upc.setText(getIntent().getStringExtra("upc"));
-        price.setText(getIntent().getStringExtra("price"));
+        if(!getIntent().getStringExtra("price").equals("No price found!")){
+            price.setText("$"+getIntent().getStringExtra("price"));
+        }else {
+            price.setText(getIntent().getStringExtra("price"));
+        }
         store.setText(getIntent().getStringExtra("store"));
 
         Button butt = (Button)findViewById(R.id.button);

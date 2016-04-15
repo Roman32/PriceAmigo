@@ -10,6 +10,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.text.NumberFormat;
+
 /**
  * Created by Roman on 3/23/2016.
  */
@@ -62,9 +64,10 @@ public class WebScrape extends AsyncTask<Void,Void,Void> {
             Document docBB = Jsoup.connect(bbURL).get();
             Element price = docBB.select("div.medium-item-price").first();
             priceS = price.text();
+            priceS = priceS.replaceAll("(?<=\\d),(?=\\d)|\\$", "");
         }catch (Exception e){
             e.printStackTrace();
-            priceS = "price not FOUND!";
+            priceS = "No price found!";
         }
         return priceS;
     }
@@ -78,6 +81,7 @@ public class WebScrape extends AsyncTask<Void,Void,Void> {
             Element body = docWally.select("body").first();
             Element prices = body.select("div.product-price").first();
             priceS = prices.text();
+            priceS = priceS.replaceAll("(?<=\\d),(?=\\d)|\\$", "");
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -93,7 +97,7 @@ public class WebScrape extends AsyncTask<Void,Void,Void> {
             Element product = body.select("p.price.price-label").first();
         }catch (Exception e){
             e.printStackTrace();
-            priceS = "price not FOUND!";
+            priceS = "No price found!";
         }
         return priceS;
 
@@ -108,7 +112,7 @@ public class WebScrape extends AsyncTask<Void,Void,Void> {
             priceS = price.text();
         }catch (Exception e){
             e.printStackTrace();
-            priceS = "price not FOUND!";
+            priceS = "No price found!";
         }
         return priceS;
 
