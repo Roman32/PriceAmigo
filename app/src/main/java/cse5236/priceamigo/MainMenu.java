@@ -83,7 +83,7 @@ public class MainMenu extends AppCompatActivity {
         Log.d("MainMenu", "In on Pause");
     }
 
-    public boolean isInternetAvailable() {
+    public static boolean isInternetAvailable() {
 
         Runtime runtime = Runtime.getRuntime();
         try {

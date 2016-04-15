@@ -142,7 +142,7 @@ public class SearchResult extends Activity {
 
 
     //given the width of the screen in pixels, and a max driving radius r, this function returns the zoom level in google maps to be used
-    private int calculateZoomLevel(int screenWidth, int r) {
+    public static int calculateZoomLevel(int screenWidth, int r) {
         int d = 2*r;
         double equatorLength = 24902; // in miles
         double milesPerPixel = equatorLength / 256;
