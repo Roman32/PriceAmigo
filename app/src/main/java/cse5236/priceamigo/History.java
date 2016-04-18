@@ -55,8 +55,9 @@ public class History extends AppCompatActivity {
         names.add(name9);
         names.add(name10);
 
-        Button but1 = (Button)findViewById(R.id.button1);
+
         if(list.size() >= 1) {
+            Button but1 = (Button)findViewById(R.id.button1);
             but1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -69,13 +70,13 @@ public class History extends AppCompatActivity {
                     startActivity(i);
                 }
             });
+            but1.setVisibility(View.VISIBLE);
+            but1.setEnabled(true);
         }
-        but1.setVisibility(View.INVISIBLE);
-        but1.setEnabled(false);
 
 
-        Button but2 = (Button)findViewById(R.id.button2);
         if(list.size() >= 2) {
+            Button but2 = (Button)findViewById(R.id.button2);
             but2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -88,12 +89,14 @@ public class History extends AppCompatActivity {
                     startActivity(i);
                 }
             });
+            but2.setVisibility(View.VISIBLE);
+            but2.setEnabled(true);
         }
-        but2.setVisibility(View.INVISIBLE);
-        but2.setEnabled(false);
 
-        Button but3 = (Button)findViewById(R.id.button3);
+
+
         if(list.size() >= 3) {
+            Button but3 = (Button)findViewById(R.id.button3);
             but3.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -106,12 +109,14 @@ public class History extends AppCompatActivity {
                     startActivity(i);
                 }
             });
+            but3.setVisibility(View.VISIBLE);
+            but3.setEnabled(true);
         }
-        but3.setVisibility(View.INVISIBLE);
-        but3.setEnabled(false);
 
-        Button but4 = (Button)findViewById(R.id.button4);
+
+
         if(list.size() >= 4) {
+            Button but4 = (Button)findViewById(R.id.button4);
             but4.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -124,12 +129,14 @@ public class History extends AppCompatActivity {
                     startActivity(i);
                 }
             });
+            but4.setVisibility(View.VISIBLE);
+            but4.setEnabled(true);
         }
-        but4.setVisibility(View.INVISIBLE);
-        but4.setEnabled(false);
 
-        Button but5 = (Button)findViewById(R.id.button5);
+
+
         if(list.size() >= 5) {
+            Button but5 = (Button)findViewById(R.id.button5);
             but5.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -142,12 +149,14 @@ public class History extends AppCompatActivity {
                     startActivity(i);
                 }
             });
+            but5.setVisibility(View.VISIBLE);
+            but5.setEnabled(true);
         }
-        but5.setVisibility(View.INVISIBLE);
-        but5.setEnabled(false);
 
-        Button but6 = (Button)findViewById(R.id.button6);
+
+
         if(list.size() >= 6) {
+            Button but6 = (Button)findViewById(R.id.button6);
             but6.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -160,12 +169,14 @@ public class History extends AppCompatActivity {
                     startActivity(i);
                 }
             });
+            but6.setVisibility(View.VISIBLE);
+            but6.setEnabled(true);
         }
-        but6.setVisibility(View.INVISIBLE);
-        but6.setEnabled(false);
 
-        Button but7 = (Button)findViewById(R.id.button7);
+
+
         if(list.size() >= 7) {
+            Button but7 = (Button)findViewById(R.id.button7);
             but7.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -178,12 +189,14 @@ public class History extends AppCompatActivity {
                     startActivity(i);
                 }
             });
+            but7.setVisibility(View.VISIBLE);
+            but7.setEnabled(true);
         }
-        but7.setVisibility(View.INVISIBLE);
-        but7.setEnabled(false);
 
-        Button but8 = (Button)findViewById(R.id.button8);
+
+
         if(list.size() >= 8) {
+            Button but8 = (Button)findViewById(R.id.button8);
             but8.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -196,13 +209,15 @@ public class History extends AppCompatActivity {
                     startActivity(i);
                 }
             });
+            but8.setVisibility(View.VISIBLE);
+            but8.setEnabled(true);
         }
-        but8.setVisibility(View.INVISIBLE);
-        but8.setEnabled(false);
 
-        Button but9 = (Button)findViewById(R.id.button9);
+
+
         if(list.size() >= 9) {
-            but8.setOnClickListener(new View.OnClickListener() {
+            Button but9 = (Button)findViewById(R.id.button9);
+            but9.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(History.this, SearchResult.class);
@@ -214,13 +229,15 @@ public class History extends AppCompatActivity {
                     startActivity(i);
                 }
             });
+            but9.setVisibility(View.VISIBLE);
+            but9.setEnabled(true);
         }
-        but9.setVisibility(View.INVISIBLE);
-        but9.setEnabled(false);
 
-        Button but10 = (Button)findViewById(R.id.button10);
+
+
         if(list.size() >= 10) {
-            but8.setOnClickListener(new View.OnClickListener() {
+            Button but10 = (Button)findViewById(R.id.button10);
+            but10.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(History.this, SearchResult.class);
@@ -232,22 +249,9 @@ public class History extends AppCompatActivity {
                     startActivity(i);
                 }
             });
+            but10.setVisibility(View.VISIBLE);
+            but10.setEnabled(true);
         }
-        but10.setVisibility(View.INVISIBLE);
-        but10.setEnabled(false);
-
-        List<Button> buttons = new ArrayList<Button>();
-
-        buttons.add(but1);
-        buttons.add(but2);
-        buttons.add(but3);
-        buttons.add(but4);
-        buttons.add(but5);
-        buttons.add(but6);
-        buttons.add(but7);
-        buttons.add(but8);
-        buttons.add(but9);
-        buttons.add(but10);
 
         Collections.reverse(list);
 
@@ -258,8 +262,6 @@ public class History extends AppCompatActivity {
             }else {
                 names.get(i).setText(list.get(i).getName());
             }
-            buttons.get(i).setVisibility(View.VISIBLE);
-            buttons.get(i).setEnabled(true);
         }
 
     }

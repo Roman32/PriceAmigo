@@ -25,7 +25,9 @@
                 android:layout_height="wrap_content"
                 android:text="Result"
                 android:id="@+id/button1"
-                android:layout_alignParentRight="true" />
+                android:layout_alignParentRight="true"
+                android:enabled="false"
+                android:visibility="invisible" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -34,7 +36,8 @@
                 android:id="@+id/button2"
                 android:layout_below="@+id/button1"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+                android:layout_alignParentEnd="true"
+                android:visibility="invisible" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -43,7 +46,8 @@
                 android:id="@+id/button3"
                 android:layout_below="@+id/button2"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+                android:layout_alignParentEnd="true"
+                android:visibility="invisible" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -52,7 +56,8 @@
                 android:id="@+id/button4"
                 android:layout_alignTop="@+id/name4"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+                android:layout_alignParentEnd="true"
+                android:visibility="invisible" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -61,7 +66,8 @@
                 android:id="@+id/button5"
                 android:layout_below="@+id/button4"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+                android:layout_alignParentEnd="true"
+                android:visibility="invisible" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -70,7 +76,8 @@
                 android:id="@+id/button6"
                 android:layout_below="@+id/button5"
                 android:layout_alignLeft="@+id/button5"
-                android:layout_alignStart="@+id/button5" />
+                android:layout_alignStart="@+id/button5"
+                android:visibility="invisible" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -79,7 +86,8 @@
                 android:id="@+id/button7"
                 android:layout_alignTop="@+id/name7"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+                android:layout_alignParentEnd="true"
+                android:visibility="invisible" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -88,7 +96,8 @@
                 android:id="@+id/button8"
                 android:layout_below="@+id/button7"
                 android:layout_alignLeft="@+id/button7"
-                android:layout_alignStart="@+id/button7" />
+                android:layout_alignStart="@+id/button7"
+                android:visibility="invisible" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -97,7 +106,8 @@
                 android:id="@+id/button9"
                 android:layout_below="@+id/button8"
                 android:layout_alignLeft="@+id/button8"
-                android:layout_alignStart="@+id/button8" />
+                android:layout_alignStart="@+id/button8"
+                android:visibility="invisible" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -214,7 +224,8 @@
                 android:id="@+id/button10"
                 android:layout_below="@+id/button9"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+                android:layout_alignParentEnd="true"
+                android:visibility="invisible" />
         </RelativeLayout>
     </ScrollView>
 </LinearLayout>
